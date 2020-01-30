@@ -1,0 +1,71 @@
+extends ../layout
+
+block content
+    table
+        tr
+            th 제목
+            td= post.title
+        tr 
+            th 날짜
+            td= post.date
+        tr
+            th 닉네임
+            td= post.user.nick
+        tr
+            th 해쉬태그
+            td= post.hashtext
+        tr
+            th 조회수
+            td= post.views
+        tr
+            th 내용
+            td= post.content
+
+        if user && user.id !== post.user.id
+            - const likeFlag = user.Likes.map(f => f.id).includes(post.id);
+            if likeFlag
+                form(action='/posts/'+post.id+'/unlike' method='post')
+                    button(type='submit') 좋아요 취소
+            else
+                form(action='/posts/'+post.id+'/like' method='post')
+                    button(type='submit') 좋아요
+            
+
+    br
+    a(href='/posts'): button(type='button') list
+    if user && post.user.id === user.id    
+        a(href='/posts/'+post.id+'/edit'): button(type='button') edit
+        form(action='/posts/'+post.id method='post')
+            input(type='hidden' name='_method' value='delete')
+            button(type='submit') delete
+
+
+    h3 comments
+    .comments
+        each comment in comments
+            .comment
+                table.comment-table
+                    tr
+                        th 닉네임
+                        td= comment.user.nick
+                    tr
+                        th 날짜
+                        td= comment.date
+                    tr
+                        th 내용
+                        td=comment.content
+                .comment-edit
+                    if user && comment.user.id == user.id
+                        //- form(action='/comments/'+comment.id method='post')
+                        //-     input(type='hidden' name='_method' value='edit') 
+                        //-     button(type='submit') edit
+                        form(action='/comments/'+comment.id method='post')
+                            input(type='hidden' name='_method' value='delete') 
+                            input(type='hidden' name='postId' value=post.id)
+                            button(type='submit') delete
+    
+    if user && user.id
+        form(action='/comments' method='post')
+            input(type='hidden' name = 'postId' value=post.id)
+            textarea(name='content' required )
+            button(type='submit') 댓글 달기

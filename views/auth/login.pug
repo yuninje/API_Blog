@@ -1,0 +1,19 @@
+extends ../layout
+
+block content
+	form#login-form(action='/auth/login' method='post')
+		p
+			label(for='email') 이메일
+			input#email(type='email' name='email' required )
+		p
+			label(for='password') 비밀번호
+			input#password(type='password' name='password' required )
+		
+		
+		if loginError
+			p
+				.error-message= loginError 
+		
+		p
+			button(type='submit') 로그인
+			a(href='/'): button(type = 'button') 취소

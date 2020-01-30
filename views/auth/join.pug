@@ -1,0 +1,24 @@
+extends ../layout
+
+block content
+	form#join-form(action='/auth' method='post')
+		p
+			label(for='email') 이메일
+			input#email(type='email' name='email' required )
+		p
+			label(for='name') 이름
+			input#name(type='text' name='name' required )
+		p
+			label(for='nick') 닉네임
+			input#name(type='text' name='nick' required )
+		p
+			label(for='password') 비밀번호
+			input#password(type='password' name='password' required )
+		
+		if joinError
+			p
+				.error-message= joinError
+		
+		p
+			button(type='submit') 회원가입
+			a(href='/'): button(type = 'button') 취소
