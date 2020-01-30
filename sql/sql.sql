@@ -1,6 +1,6 @@
-drop database nodesite;
-create database nodesite;
-use nodesite;
+drop database api_blog;
+create database api_blog;
+use api_blog;
 show tables;
 
 
