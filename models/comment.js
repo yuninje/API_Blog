@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull : false
         },
 		content : {
+            field : 'content',
 			type : DataTypes.STRING(100),
 			allowNull : false,
 		}

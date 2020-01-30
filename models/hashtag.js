@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) =>{
             autoIncrement : true
         },
         tag : {
+            field : 'tag',
             type : DataTypes.STRING(30),
             allowNull : false,
             unique : true

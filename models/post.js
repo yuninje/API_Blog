@@ -12,14 +12,17 @@ module.exports = (sequelize, DataTypes) => {
             allowNull : false
         },
 		title : {
+            field : 'title',
 			type : DataTypes.STRING(100),
 			allowNull : false,
 		},
 		content : {
+            field : 'content',
 			type : DataTypes.STRING(140),
 			allowNull : false,
         },
         views : {
+            field : 'views',
             type : DataTypes.INTEGER,
             defaultValue : 0
         }

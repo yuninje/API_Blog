@@ -1,22 +1,13 @@
 const express = require('express');
-
 const router = express.Router();
-const commentRouter = require('./comment');
-const postRouter = require('./post');
-const userRouter = require('./user');
-const authRouter = require('./auth');
 
+const comment = require('./comment');
+const post = require('./post');
+const user = require('./user');
+const auth = require('./auth');
 
-router.get('/', (req, res) =>{
-	res.render('index', {
-        title : '홈페이지',
-        user : req.user,
-    });
-});
-
-router.use('/comments', commentRouter);
-router.use('/posts', postRouter);
-router.use('/users', userRouter);
-router.use('/auth', authRouter);
+router.use('/comments', comment);
+router.use('/posts', post);
+router.use('/users', user);
 
 module.exports = router;
