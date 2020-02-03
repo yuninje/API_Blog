@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         user_id : {
             field : 'user_id',
-            type : DataTypes.INTEGER,
+            type : DataTypes.STRING(30),
             allowNull : false
         },
         post_id : {
@@ -22,8 +22,8 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull : false,
 		}
 	},{
-		timestamps : true,
-		paranoid : true,
+		timestamps : false,
+		paranoid : false,
         underscored: true,
         tableName: 'comment',
         freezeTableName: true

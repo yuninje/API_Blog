@@ -1,6 +1,6 @@
 const router = require('express').Router()
 // const auth = require('../../middlewares/auth')
-const controller = require('./post.controller')
+const ctrl = require('./post.ctrl')
 
 
 module.exports = router

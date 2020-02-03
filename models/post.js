@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         user_id : {
             field : 'user_id',
-            type : DataTypes.INTEGER,
+            type : DataTypes.STRING(30),
             allowNull : false
         },
 		title : {
@@ -27,8 +27,8 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue : 0
         }
 	}, {
-		timestamps : true,  // createdAt, updatedAt column 생성
-		paranoid : true, 	// deletedAt column 생성
+		timestamps : false,  // createdAt, updatedAt column 생성
+		paranoid : false, 	// deletedAt column 생성
         underscored: true,
         tableName: 'post',
         freezeTableName: true

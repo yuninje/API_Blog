@@ -1,8 +1,7 @@
-drop database api_blog;
-create database api_blog;
-use api_blog;
+drop database api_blog_dev;
+create database api_blog_dev;
+use api_blog_dev;
 show tables;
-
 
 select * from user;
 describe user;
@@ -13,8 +12,8 @@ describe post;
 select * from comment;
 describe comment;
 
-select * from like;
-describe like;
+select * from `like`;
+describe `like`;
 
 select * from follow;
 describe follow;
@@ -24,5 +23,3 @@ describe hashtag;
 
 select * from post_hashtag;
 describe post_hashtag;
-
-select *

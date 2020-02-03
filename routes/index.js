@@ -4,7 +4,7 @@ const router = express.Router();
 const comment = require('./comment');
 const post = require('./post');
 const user = require('./user');
-const auth = require('./auth');
+// const auth = require('./auth');
 
 router.use('/comments', comment);
 router.use('/posts', post);

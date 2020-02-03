@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app"
+    "start": "nodemon",
+    "test": "mocha routes/**/*.spec.js"
   },
   "author": "Yuninje",
   "license": "ISC",
@@ -24,6 +25,9 @@
     "sequelize-cli": "^5.5.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2"
+    "mocha": "^7.0.1",
+    "nodemon": "^2.0.2",
+    "should": "^13.2.3",
+    "supertest": "^4.0.2"
   }
 }

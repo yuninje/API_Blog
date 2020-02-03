@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
             field : 'email',
 			type : DataTypes.STRING(30),
             allowNull : false,
-            unique : true,
 		},
 		nick : {
             field : 'nick',
@@ -28,8 +27,8 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull : false,
 		},
 	},{
-		timestamps : true,  // createdAt, updatedAt column 생성
-		paranoid : true, 	// deletedAt column 생성
+		timestamps : false,  // createdAt, updatedAt column 생성
+		paranoid : false, 	// deletedAt column 생성
         underscored: true,
         tableName: 'user',
         freezeTableName: true
