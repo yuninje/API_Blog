@@ -73,19 +73,24 @@ const addUser = async ( req, res ) => {
 
     if(!(user_id && user_pw && email && nick && name)) return res.status(400).end()
 
-    user = await User.findOne({
-        where : {
-            [Op.or] : [
-                {'user_id' : user_id}, {'nick' : nick}
-            ]
-        }
-    })
-    if(user) return res.status(400).end()
+    // user = await User.findOne({
+    //     where : {
+    //         user_id : user_id
+    //     }
+    // })
+    // if(user) return res.status(400).end()
+    // user = await User.findOne({
+    //     where : {
+    //         nick : nick
+    //     }
+    // })
+    // if(user) return res.status(400).end()
+
+
 
     user = await User.create({
         user_id, user_pw, email, nick, name
     })
-
     res.json(user)
 }
 

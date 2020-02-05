@@ -65,11 +65,11 @@ describe('POST /users', () => {
             request(app)
                 .post('/users')
                 .send({
-                    'user_id' : 'dbs',
+                    'user_id' : 'dbsdlswp111424',
                     'user_pw' : 'dbs123',
                     'email' : 'dbsdlswp@naver.com',
-                    'nick' : '코봉이1',
-                    'name' : '윤인제'
+                    'nick' : '코봉이3121',
+                    'name' : '윤인제1231'
                 })
                 .expect(400)
                 .end(done)
@@ -78,11 +78,11 @@ describe('POST /users', () => {
             request(app)
                 .post('/users')
                 .send({
-                    'user_id' : 'dbsdlswp1',
-                    'user_pw' : 'dbs123',
-                    'email' : 'dbsdlswp@naver.com',
-                    'nick' : '코봉이',
-                    'name' : '윤인제'
+                    'user_id' : 'dbsdlswp112313',
+                    'user_pw' : 'dbs121233',
+                    'email' : 'dbsdl123swp@naver.com',
+                    'nick' : 'aaaa',
+                    'name' : '윤444인제'
                 })
                 .expect(400)
                 .end(done)
