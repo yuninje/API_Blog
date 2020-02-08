@@ -1,7 +1,7 @@
 const ErrorHandler = (error) => {
     let retObj = null;
     switch (error) {
-        case 'EXIT' :
+        case 'EXIST' :
             retObj = { result : false, status : 409, message : 'Conflict'}
             break
         case 'No_AUTH' : 
@@ -22,6 +22,15 @@ const ErrorHandler = (error) => {
     return retObj
 }
 
+const errors = {
+    EXIST : 'EXIST',
+    No_AUTH : 'NO_AUTH',
+    FORBIDDEN :'FORBIDDEN',
+    BADREQ :'BADREQ',
+    NOTFOUND :'NOTFOUND',
+}
+
 module.exports = {
-    ErrorHandler
+    ErrorHandler,
+    errors
 }

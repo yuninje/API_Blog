@@ -13,4 +13,20 @@ app.use(routes);
 if(process.env.NODE_ENV !=='test'){
     app.use(morgan('dev'))
 }
+
+
+app.use((req, res, next) => {
+    res.statusCode = 404
+    next(Error('not found'))
+})
+
+app.use((err, req, res, next) => {
+    console.log(err)
+    res.status(res.statusCode || 500)
+    res.json({
+        result: false,
+        error: err.message || 'internal server error'
+    })
+})
+
 module.exports = app
