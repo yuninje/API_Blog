@@ -1,44 +1,55 @@
 const app = require("../../app");
 const should = require("should");
 const request = require("supertest");
+const {LIMIT} = require('./user.ctrl')
 
 const success = "성공";
 const fail = "실패";
 
 describe("GET /users", () => {
   describe(success, () => {
-    it("User 배열을 반환한다.", done => {
+    it("유저 배열을 응답한다.", done => {
       request(app)
         .get("/users")
         .end((err, res) => {
+          res.body.should.have.property("result", true);
           res.body.should.have.property("data").with.instanceOf(Array);
           done();
         });
     });
 
-    it("최대 limit 갯수만큼 응답한다.", done => {
+    it("요청한 limit 갯수만큼 응답한다.", done => {
       request(app)
         .get("/users?limit=2")
         .end((err, res) => {
+          res.body.should.have.property("result", true);
           res.body.should.have.property("data").with.lengthOf(2);
           done();
         });
     }),
-      it("limit이 잘못 입력되거나 미입력되면 5개를 응답한다.", done => {
-        request(app)
-          .get("/users?limit=two")
-          .end((err, res) => {
-            res.body.should.have.property("data").with.lengthOf(5);
-            done();
-          });
-      });
+    it(`요청한 limit이 잘못된 정보라면 ${LIMIT}개를 응답한다.`, done => {
+      request(app)
+        .get("/users?limit=two")
+        .end((err, res) => {
+          res.body.should.have.property("data").with.lengthOf(LIMIT);
+          done();
+        });
+    });
+    it(`limit이 요청되지 않았으면 ${LIMIT}개를 응답한다.`, done => {
+      request(app)
+        .get("/users")
+        .end((err, res) => {
+          res.body.should.have.property("data").with.lengthOf(LIMIT);
+          done();
+        });
+    });
   });
 });
 
 describe("POST /users", () => {
   const url = "users";
   describe(success, () => {
-    it(`result : true, data : '회원 가입 성공'`, done => {
+    it(`요청한 정보의 유저를 생성한다.`, done => {
       request(app)
         .post("/users")
         .send({
@@ -56,7 +67,7 @@ describe("POST /users", () => {
     });
   });
   describe(fail, () => {
-    it("user_id 가 중복되면 409 응답, result : false, status : 409", done => {
+    it("요청한 user_id가 이미 존재하면 400을 응답한다.", done => {
       request(app)
         .post("/users")
         .send({
@@ -73,7 +84,7 @@ describe("POST /users", () => {
           done();
         });
     });
-    it("nick 가 중복되면 400 응답, result : false, status : 409", done => {
+    it("요청한 nick이 이미 존재하면 400 응답한다.", done => {
       request(app)
         .post("/users")
         .send({
@@ -90,7 +101,7 @@ describe("POST /users", () => {
           done();
         });
     });
-    it("빠진 데이터가 있으면 400 응답한다.", done => {
+    it("요청한 데이터가 부족하면 400 응답한다.", done => {
       request(app)
         .post("/users")
         .send({
@@ -101,17 +112,43 @@ describe("POST /users", () => {
         })
         .expect(400)
         .end((err, res) => {
-            res.body.should.have.property('result', false)
-            res.body.should.have.property('status', 400)
-            done()
+          res.body.should.have.property("result", false);
+          res.body.should.have.property("status", 400);
+          done();
         });
     });
   });
 });
 
-describe("UPDATE /users/:user_id", () => {
+describe(`GET /users/:user_id`, () => {
   describe(success, () => {
-    it(`result : true, data : '회원 정보 수정 성공'`, done => {
+    it(`요청한 user_id의 유저 정보를 반환한다.`, done => {
+      request(app)
+        .get(`/users/dbsdlswp`)
+        .end((err, res) => {
+          res.body.should.have.property("result", true);
+          res.body.should.have.property("data");
+          done();
+        });
+    });
+  });
+  describe(fail, () => {
+    it(`요청한 user_id의 유저가 존재하지 않으면 400을 응답한다.`, done => {
+      request(app)
+        .get(`/users/not_exist_user_id`)
+        .expect(400)
+        .end((err, res) => {
+          res.body.should.have.property("result", false);
+          res.body.should.have.property("status", 400);
+          done();
+        });
+    });
+  });
+});
+
+describe("PUT /users/:user_id", () => {
+  describe(success, () => {
+    it(`요청한 user_id의 유저의 정보를 수정한다.'`, done => {
       request(app)
         .put("/users/dbsdlswp")
         .send({
@@ -128,9 +165,9 @@ describe("UPDATE /users/:user_id", () => {
     });
   });
   describe(fail, () => {
-    it(`해당 id의 유저가 존재하지 않으면 400을 응답하고, result : false, status : 400`, done => {
+    it(`요청한 user_id의 유저가 존재하지 않으면 400을 응답한다.`, done => {
       request(app)
-        .put("/users/aaaaabbbbb11")
+        .put("/users/not_exist_user_id")
         .send({
           user_pw: "1234",
           email: "aaaaaa@aaa.com",
@@ -144,7 +181,7 @@ describe("UPDATE /users/:user_id", () => {
           done();
         });
     });
-    it("nick 이 중복되면 400을 응답하고, result : false, status : 409", done => {
+    it("요청한 nick이 이미 존재하면 400을 응답한다.", done => {
       request(app)
         .put("/users/dbsdlswp")
         .send({
@@ -165,7 +202,7 @@ describe("UPDATE /users/:user_id", () => {
 
 describe("DELETE /users/:user_id", () => {
   describe(success, () => {
-    it(`result : true, data : '회원 탈퇴 성공'`, done => {
+    it(`요청한 user_id의 유저 정보를 삭제한다.'`, done => {
       request(app)
         .delete("/users/dbsdlswp")
         .expect(400)
@@ -177,9 +214,9 @@ describe("DELETE /users/:user_id", () => {
     });
   });
   describe(fail, () => {
-    it("해당 id의 유저가 존재하지 않으면 400을 응답하고, result : false, status : 400", done => {
+    it("요청한 user_id의 유저가 존재하지 않으면 400을 응답한다.", done => {
       request(app)
-        .delete("/users/adfafdsf321sfd")
+        .delete("/users/not_exist_user_id")
         .expect(400)
         .end((err, res) => {
           res.body.should.have.property("result", false);

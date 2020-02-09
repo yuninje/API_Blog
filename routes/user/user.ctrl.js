@@ -3,6 +3,9 @@ const User = models.db.user;
 const { ErrorHandler, errors } = require("../../middlewares/error");
 const { Op } = require("sequelize");
 
+const LIMIT = 5;
+
+// 모든 유저의 정보를 가져오는 메소드
 const getUsers = (req, res) => {
   let { limit, page } = req.query;
   limit = parseInt(limit, 10) || 5;
@@ -17,12 +20,12 @@ const getUsers = (req, res) => {
 
   const onError = error => {
     //console.error(error);
-    res.status(400);
+    res.status(400).json(ErrorHandler(error.message));
   };
 
   models.sequelize
     .transaction(async t => {
-      const users = User.findAll({
+      const users = await User.findAll({
         limit: limit,
         offset: limit * (page - 1),
         transaction: t
@@ -33,6 +36,7 @@ const getUsers = (req, res) => {
     .catch(onError);
 };
 
+// user_id의 정보를 가진 유저의 정보를 가져오는 메소드
 const getUser = (req, res) => {
   const { user_id } = req.params;
 
@@ -45,7 +49,7 @@ const getUser = (req, res) => {
 
   const onError = error => {
     //console.error(error);
-    res.status(400);
+    res.status(400).json(ErrorHandler(error.message));
   };
 
   models.sequelize
@@ -55,11 +59,13 @@ const getUser = (req, res) => {
         transaction: t
       });
       if (!user) throw new Error(errors.BADREQ);
+      return user;
     })
     .then(respond)
     .catch(onError);
 };
 
+// 유저를 추가하는 메소드
 const addUser = (req, res) => {
   const { user_id, user_pw, email, nick, name } = req.body;
 
@@ -104,6 +110,7 @@ const addUser = (req, res) => {
     .catch(onError);
 };
 
+// 유저를 수정하는 메소드
 const updateUser = (req, res) => {
   const { user_id } = req.params;
   const { name, email, nick, user_pw } = req.body;
@@ -149,6 +156,7 @@ const updateUser = (req, res) => {
     .catch(onError);
 };
 
+// 유저를 삭제하는 메소드 ( 탈퇴 )
 const deleteUser = (req, res) => {
   const { user_id } = req.params;
 
@@ -180,6 +188,7 @@ const deleteUser = (req, res) => {
 };
 
 module.exports = {
+  LIMIT,
   getUsers,
   getUser,
   addUser,
