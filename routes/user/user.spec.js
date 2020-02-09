@@ -148,7 +148,7 @@ describe(`GET /users/:user_id`, () => {
 
 describe("PUT /users/:user_id", () => {
   describe(success, () => {
-    it(`요청한 user_id의 유저의 정보를 수정한다.'`, done => {
+    it(`요청한 user_id의 유저의 정보를 수정한다.`, done => {
       request(app)
         .put("/users/dbsdlswp")
         .send({
@@ -202,7 +202,7 @@ describe("PUT /users/:user_id", () => {
 
 describe("DELETE /users/:user_id", () => {
   describe(success, () => {
-    it(`요청한 user_id의 유저 정보를 삭제한다.'`, done => {
+    it(`요청한 user_id의 유저 정보를 삭제한다.`, done => {
       request(app)
         .delete("/users/dbsdlswp")
         .expect(400)

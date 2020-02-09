@@ -36,7 +36,7 @@ describe(`GET /posts`, () => {
           done();
         });
     });
-    it(`limit이 미입력되면 ${LIMIT}개를 응답한다.`, done => {
+    it(`limit이 잘못 입력되면 ${LIMIT}개를 응답한다.`, done => {
       request(app)
         .get("/posts?limit=two")
         .end((err, res) => {

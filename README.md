@@ -1,11 +1,12 @@
 # API_Blog
 
-## Node.js로 구현한 blog REST API
-
 ### 기술 스택
 - 백엔드
   - Node.js
-  - Express, MySQL, REST API
+  - Express
+  - MySQL, REST API
+- 테스트 
+  - Mocha, Should.js, SuperTest
 
 ### 기능
 - 회원관리
