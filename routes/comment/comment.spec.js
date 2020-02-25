@@ -62,7 +62,7 @@ describe(`POST /comments`, () => {
           .end((err, res) => {
             res.body.should.have.property("result", true);
             res.body.should.have.property("data");
-            exist_comment = res.body.data.post_id
+            exist_comment = res.body.data.comment_id
             done();
           });
       });
@@ -87,7 +87,7 @@ describe(`GET /comments/:comment_id`, () => {
     describe(success, () => {
       it(`요청한 정보의 댓글의 정보를 응답한다.`, done => {
         request(app)
-          .get(`/comments/2`)
+          .get(`/comments/${exist_comment}`)
           .end((err, res) => {
             res.body.should.have.property("result", true);
             res.body.should.have.property("data");
@@ -123,7 +123,7 @@ describe(`GET /comments/:comment_id`, () => {
     describe(success, () => {
       it(`요청한 정보의 댓글을 수정한다.`, done => {
         request(app)
-          .put(`/comments/1`)
+          .put(`/comments/${exist_comment}`)
           .end((err, res) => {
               res.body.should.have.property('result', true)
               res.body.should.have.property('data', '댓글 수정 성공')

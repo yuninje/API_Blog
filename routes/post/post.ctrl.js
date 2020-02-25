@@ -1,5 +1,6 @@
 const models = require("../../models");
 const Post = models.db.post;
+const Comment = models.db.comment;
 const { ErrorHandler, errors } = require("../../middlewares/error");
 const { Op } = require("sequelize");
 
@@ -28,6 +29,7 @@ const getPosts = (req, res) => {
       const posts = await Post.findAll({
         limit: limit,
         offset: (page - 1) * limit,
+        include : Comment,
         transaction: t
       });
       if (!posts) throw new Error(""); // process error
